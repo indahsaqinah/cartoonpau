@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_POST["submit"])) {
-    include_once("../../dbconnect.php");
+    include_once("../dbconnect.php");
     $name = $_POST["name"];
     $email = $_POST["email"];
     $phone = $_POST["phone"];
@@ -14,7 +14,7 @@ if (isset($_POST["submit"])) {
         if (file_exists($_FILES["fileToUpload"]["tmp_name"]) || is_uploaded_file($_FILES["fileToUpload"]["tmp_name"])) {
             uploadImage($phone);
         }
-        echo "<script>window.location.replace('agentlist.php')</script>";
+        echo "<script>window.location.replace('registersuccessful.php')</script>";
     } catch (PDOException $e) {
         echo "<script>alert('Registration failed')</script>";
         echo "<script>window.location.replace('newagent.php')</script>";
@@ -41,32 +41,32 @@ function uploadImage($id)
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<script src="../../js/script.js"></script>
+<script src="../js/script.js"></script>
 
 <style>
-  /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
-  .dropdown-container {
-    display: none;
-    padding-left: 16px;
-  }
+    /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+    .dropdown-container {
+        display: none;
+        padding-left: 16px;
+    }
 
-  /* Optional: Style the caret down icon */
-  .fa-caret-down {
-    float: right;
-    padding-right: 150px;
-  }
+    /* Optional: Style the caret down icon */
+    .fa-caret-down {
+        float: right;
+        padding-right: 150px;
+    }
 
-  .dropdown-btn {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    display: block;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-    outline: none;
-  }
+    .dropdown-btn {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        display: block;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        outline: none;
+    }
 </style>
 
 <body>
@@ -81,18 +81,7 @@ function uploadImage($id)
 
         <!--Navigation bar-->
         <div class="w3-bar-block">
-            <button class="dropdown-btn w3-hover-white">Item<i class="fa fa-caret-down w3-hover-white"></i></button>
-            <div class="dropdown-container" onclick="w3_close()">
-                <a href="mainpage.php" class="w3-button w3-hover-white">Item List</a><br>
-                <a href="newitem.php" class="w3-button w3-hover-white">Add Item</a>
-            </div>
-            <button class="dropdown-btn w3-hover-white">Agent<i class="fa fa-caret-down w3-hover-white"></i></button>
-            <div class="dropdown-container" onclick="w3_close()">
-                <a href="agentlist.php" class="w3-button w3-hover-white">Agent List</a><br>
-                <a href="newagent.php" class="w3-button w3-hover-white">Add Agent</a>
-            </div>
-            <a href="../../index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Logout</a>
-        </div>
+            <a href="../index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
     </nav>
 
     <!-- Top menu on small screens -->
@@ -109,7 +98,7 @@ function uploadImage($id)
 
         <!-- Header -->
         <div class="w3-container w3-center" style="margin-top:45px" id="showcase">
-            <img src="../../res/logo.png" alt="Trulli" width="420" height="320" class="responsive">
+            <img src="../res/logo.png" alt="Trulli" width="420" height="320" class="responsive">
         </div>
 
         <div class="w3-container w3-padding-64 form-container">
@@ -118,10 +107,10 @@ function uploadImage($id)
                     <h3>New Agent Registration</h3>
                 </div>
 
-                <form class="w3-container w3-padding w3-white" name="registerForm" action="newagent.php" method="post" enctype="multipart/form-data" onsubmit="return confirmDialog()">
+                <form class="w3-container w3-padding w3-white" name="registerForm" action="newagent.php" method="post" enctype="multipart/form-data">
                     <p>
                     <div class="w3-container w3-border w3-center w3-padding">
-                        <img class="w3-image w3-round" src="../../res/users/profile.png" style="width:100%; max-width:200px"><br>
+                        <img class="w3-image w3-round" src="../res/users/profile.png" style="width:100%; max-width:200px"><br>
                         <input class="w3-margin" type="file" onchange="previewFile()" name="fileToUpload" id="fileToUpload"><br>
                     </div>
                     </p>

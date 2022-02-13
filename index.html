@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+
 <!--Instagram floating-->
 <a href="https://instagram.com/paucartoon?utm_medium=copy_link" class="float" target="_blank">
 <i class="fa fa-instagram my-float"></i>
@@ -57,6 +58,30 @@
   max-width: 100%;
   height: auto;
 }
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  padding-left: 16px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right:150px;
+}
+
+.dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
 </style>
 
 <body>
@@ -72,13 +97,15 @@
   <!--Navigation bar-->
   <div class="w3-bar-block">
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
-    <a href="#menu" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Menu</a> 
-    <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Pricing</a>
-    <a href="#location" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Where to Buy</a>  
     <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About</a> 
+    <a href="#location" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Where to Buy</a>  
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact Us</a>
-    <a href="admin/login.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Login</a>
-    <a href="admin/php/newagent.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sign Up to be an Agent!</a>
+    <button class="dropdown-btn w3-hover-white">Login<i class="fa fa-caret-down w3-hover-white"></i></button>
+    <div class="dropdown-container">
+      <a href="admin/php/login.php" class="w3-button w3-hover-white">Admin</a><br>
+      <a href="user/php/login.php" class="w3-button w3-hover-white">User</a>
+    </div>
+    <a href="user/php/signup.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sign Up</a>
   </div>
 </nav>
 
@@ -96,7 +123,7 @@
 
   <!-- Header -->
   <div class="w3-container w3-center" style="margin-top:45px" id="showcase">
-    <img src="img/logo.png" alt="Trulli" width="420" height="320" class="responsive">
+    <img src="res/logo.png" alt="Trulli" width="420" height="320" class="responsive">
   </div>
 
   <!--Home-->
@@ -106,126 +133,23 @@
     &ensp;12 Flavours.<br>
     &ensp;Too cute to eat! &#x1F60B;</h1><br><br><br><br>
   </div>
-  
-    <!-- First Photo Grid/ Menu-->
-    <div class="w3-row-padding w3-padding-16 w3-center" id="menu">
-      <h1 class="w3-xxlarge w3-2019-creme-de-peche w3-center w3-hover-text-black w3-sofia" style="text-shadow: 1px 1px 0 #444;"><b>Menu</b></h1>
-        <div class="w3-quarter">
-            <img src="img/1.jpg" class="w3-hover-opacity" alt="CA" style="width:100%" onclick="onClick(this)">
-           <h4 class="w3-cursive">CAPTAIN AMERICA</h4>
-           <p>Beef Bolognese</p>
-        </div>
-   
-        <div class="w3-quarter">
-           <img src="img/2.jpg" class="w3-hover-opacity" alt="bear" style="width:100%" onclick="onClick(this)">
-           <h4 class="w3-cursive">BEAR</h4>
-           <p>Chicken Carbonara</p>
-       </div>
-   
-       <div class="w3-quarter">
-           <img src="img/3.jpg" class="w3-hover-opacity" alt="smiley" style="width:100%" onclick="onClick(this)">
-           <h4 class="w3-cursive">SMILEY</h4>
-           <p>Sweet corn</p>
-       </div>
-   
-       <div class="w3-quarter">
-           <img src="img/4.jpg" class="w3-hover-opacity" alt="doraemon" style="width:100%" onclick="onClick(this)">
-           <h4 class="w3-cursive">DORAEMON</h4>
-           <p>Red bean</p>
-       </div>
-   </div>
 
-   <!-- Second Photo Grid-->
-   <div class="w3-row-padding w3-padding-16 w3-center">
-       <div class="w3-quarter">
-          <img src="img/5.jpg" class="w3-hover-opacity" alt="HK" style="width:100%" onclick="onClick(this)">
-          <h4 class="w3-cursive">HELLO KITTY</h4>
-          <p>Strawberry Pinapple</p>
-       </div>
-  
-       <div class="w3-quarter">
-          <img src="img/6.jpg" class="w3-hover-opacity" alt="nemo" style="width:100%" onclick="onClick(this)">
-          <h4 class="w3-cursive">NEMO</h4>
-          <p>Coconut Caramel</p>
-      </div>
-  
-      <div class="w3-quarter">
-          <img src="img/7.jpg" class="w3-hover-opacity" alt="minion" style="width:100%" onclick="onClick(this)">
-          <h4 class="w3-cursive">MINION</h4>
-          <p>Chocolate</p>
-      </div>
-  
-      <div class="w3-quarter">
-          <img src="img/8.jpg" class="w3-hover-opacity" alt="keroro" style="width:100%" onclick="onClick(this)">
-          <h4 class="w3-cursive">KERORO</h4>
-          <p>Kaya</p>
-      </div>
-  </div>
-
-  <!-- Third Photo Grid-->
-  <div class="w3-2019-sweet-corn w3-row-padding w3-padding-16 w3-center">
-   <div class="w3-quarter">
-      <img src="img/9.jpg" class="w3-hover-opacity" alt="AB" style="width:100%" onclick="onClick(this)">
-      <h4 class="w3-cursive">ANGRY BIRD</h4>
-      <p>Mocha Walnut</p>
-   </div>
-
-   <div class="w3-quarter">
-      <img src="img/10.jpg" class="w3-hover-opacity" alt="panda" style="width:100%" onclick="onClick(this)">
-      <h4 class="w3-cursive">PANDA</h4>
-      <p>Peanut Butter</p>
+    <!-- About -->
+    <div class="w3-container w3-row-padding w3-padding-16 w3-text-align-justify" id="about" style="margin-top:75px">
+      <h1 class="w3-xxlarge w3-2019-creme-de-peche w3-center hover-text-black w3-sofia" style="text-shadow: 1px 1px 0 #444;"><b>About</b></h1>
+      <p>Frozen Cartoon Pau is started to sale in July 2021. Little by little, the business grew and it now has several agents in the Klang Valley. This pau is also marketed in selected stores.
+        This pau comes in 12 various flavour; chocolate, chicken carbonara, kaya and others that are very tasty and suitable for people of all ages to eat. 
+        Frozen Cartoon Pau is also HALAL and a product of Bumiputera. Try first and you will not regret! &#x1F609;
+      </p>
+      <p>Anyone who wants to be a Frozen Cartoon Pau agent can apply as well.</p>
+      <a href="main/newagent.php" target="_blank" class="w3-2019-sweet-lilac"><strong>Sign up to be an agent!</strong></a><br><br>
+      <img src="res/all.png" class="w3-hover-opacity" alt="All Flav" style="width:250px;height:250px;">
     </div>
-
-    <div class="w3-quarter">
-      <img src="img/11.jpg" class="w3-hover-opacity" alt="spiderman" style="width:100%" onclick="onClick(this)">
-      <h4 class="w3-cursive">SPIDERMAN</h4>
-      <p>Macaroni Blackpepper Chicken</p>
-    </div>
-
-    <div class="w3-quarter">
-      <img src="img/12.jpg" class="w3-hover-opacity" alt="tweety" style="width:100%" onclick="onClick(this)">
-      <h4 class="w3-cursive">TWEETY</h4>
-      <p>Chicken Curry</p> 
-    </div>
-  </div>
-
-  <!-- Modal for full size images on click-->
-  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
-    <span class="w3-button w3-black w3-xxlarge w3-display-topright"></span>
-    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-      <img id="img01" class="w3-image">
-      <p id="caption"></p>
-    </div>
-  </div>
-
-  <!-- Pricing -->
-  <div class="w3-container w3-row-padding w3-padding-16" id="pricing" style="margin-top:75px">
-    <h1 class="w3-xxlarge w3-2019-creme-de-peche w3-center hover-text-black w3-sofia" style="text-shadow: 1px 1px 0 #444;"><b>Pricing</b></h1>
-    <p>We have two types of packaging: mini and standard! :D</p>
-
-    <!--Mini Price-->
-    <div class="row">
-      <div class="w3-card-4 column">
-        <img src="img/3pcs.jpeg" class="w3-hover-opacity" alt="mini" style="width:50%">
-        <div class="w3-container">
-          <p>Mini Pau 3 Pcs<br><strong>RM9.00</strong></p>
-        </div>
-      </div>
-
-    <!--Standard Price-->   
-      <div class="w3-card-4 column">
-        <img src="img/6pcs.jpeg" class="w3-hover-opacity" alt="standard" style="width:50%">
-        <div class="w3-container">
-          <p>Standard Pau 6 Pcs<br><strong>RM16.00</strong></p>    
-        </div>   
-      </div>
-    </div>
-  </div>
 
   <!-- Location -->
   <div class="w3-container w3-row-padding w3-padding-16" id="location" style="margin-top:70px">
     <h1 class="w3-xxlarge w3-2019-creme-de-peche w3-center hover-text-black w3-sofia" style="text-shadow: 1px 1px 0 #444;"><b>Where To Buy</b></h1>
-    <p>Sign Up in our website to purchase. Our pau is also available at a several stores, and in some areas, we also offer Cash on Delivery (COD) service up to your doorstep!</p>
+    <p><a href="user/php/signup.php" class="w3-hover-red">Sign Up</a> in our website to purchase. Our pau is also available at a several stores, and in some areas, we also offer Cash on Delivery (COD) service up to your doorstep!</p>
        
     <!--Stores Tabs-->
     <div class="w3-container">
@@ -341,17 +265,7 @@
     </div>
   </div>
 
-  <!-- About -->
-  <div class="w3-container w3-row-padding w3-padding-16 w3-text-align-justify" id="about" style="margin-top:75px">
-    <h1 class="w3-xxlarge w3-2019-creme-de-peche w3-center hover-text-black w3-sofia" style="text-shadow: 1px 1px 0 #444;"><b>About</b></h1>
-    <p>Frozen Cartoon Pau is started to sale in July 2021. Little by little, the business grew and it now has several agents in the Klang Valley. This pau is also marketed in selected stores.
-      This pau comes in 12 various flavour; chocolate, chicken carbonara, kaya and others that are very tasty and suitable for people of all ages to eat. 
-      Frozen Cartoon Pau is also HALAL and a product of Bumiputera. Try first and you will not regret! &#x1F609;
-    </p>
-    <p>Anyone who wants to be a Frozen Cartoon Pau agent can apply as well.</p>
-    <a href="https://api.whatsapp.com/send?phone=601110088545" target="_blank" class="w3-2019-sweet-lilac"><strong>Sign up to be an agent!</strong></a><br><br>
-    <img src="img/all.png" class="w3-hover-opacity" alt="All Flav" style="width:250px;height:250px;">
-  </div>
+
   
   <!-- Contact -->
   <div class="w3-container w3-row-padding w3-padding-16" id="contact" style="margin-top:75px">
@@ -399,7 +313,7 @@
 </div>
 
 <script>
-// Script to open and close sidebar
+  // Script to open and close sidebar
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
   document.getElementById("myOverlay").style.display = "block";
@@ -431,6 +345,21 @@ function openCity(evt, cityName) {
   }
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.firstElementChild.className += " w3-border-red";
+}
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+  this.classList.toggle("active");
+  var dropdownContent = this.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+  dropdownContent.style.display = "none";
+  } else {
+  dropdownContent.style.display = "block";
+  }
+  });
 }
 </script>
 

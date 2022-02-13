@@ -1,33 +1,51 @@
 <?php
+include_once("../../dbconnect.php");
+
 session_start();
 
-include_once("../../dbconnect.php");
-$sqlpau = "SELECT * FROM tbl_pau ORDER BY pau_name ASC";
+$useremail = $_SESSION['user_email'];
+$user_name = $_SESSION['user_name'];
+$user_phone = $_SESSION['user_phone'];
+
+$sqlquery = "SELECT * FROM tbl_pau ORDER BY pau_name ASC";
+
+if (isset($_GET['submit']) && $_GET['submit'] == "search") {
+  $search = $_GET['search'];
+  $sqlquery = "SELECT * FROM tbl_pau WHERE pau_name LIKE '%$search%'";
+} else {
+  $sqlquery = "SELECT * FROM tbl_pau";
+}
 
 $results_per_page = 6;
 if (isset($_GET['pageno'])) {
   $pageno = (int)$_GET['pageno'];
-
   $page_first_result = ($pageno - 1) * $results_per_page;
 } else {
   $pageno = 1;
-  $page_first_result = ($pageno - 1) * $results_per_page;
+  $page_first_result = 0;
 }
 
-$stmt = $conn->prepare($sqlpau);
+$stmt = $conn->prepare($sqlquery);
 $stmt->execute();
+$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+$rows = $stmt->fetchAll();
 $number_of_result = $stmt->rowCount();
 $number_of_page = ceil($number_of_result / $results_per_page);
-
-$sqlpau = $sqlpau . " LIMIT $page_first_result , $results_per_page";
-$stmt = $conn->prepare($sqlpau);
+$sqlquery = $sqlquery . " LIMIT $page_first_result , $results_per_page";
+$stmt = $conn->prepare($sqlquery);
 $stmt->execute();
 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $rows = $stmt->fetchAll();
 
+function subString($str)
+{
+  if (strlen($str) > 15) {
+    return $substr = substr($str, 0, 15) . '...';
+  } else {
+    return $str;
+  }
+}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,34 +58,8 @@ $rows = $stmt->fetchAll();
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<script src="../../js/script.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 
-<style>
-  /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
-  .dropdown-container {
-    display: none;
-    padding-left: 16px;
-  }
-
-  /* Optional: Style the caret down icon */
-  .fa-caret-down {
-    float: right;
-    padding-right: 150px;
-  }
-
-  .dropdown-btn {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    display: block;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-    outline: none;
-  }
-</style>
-</style>
 
 <body>
 
@@ -81,19 +73,13 @@ $rows = $stmt->fetchAll();
 
     <!--Navigation bar-->
     <div class="w3-bar-block">
-      <button class="dropdown-btn w3-hover-white">Item<i class="fa fa-caret-down w3-hover-white"></i></button>
-      <div class="dropdown-container" onclick="w3_close()">
-        <a href="mainpage.php" class="w3-button w3-hover-white">Item List</a><br>
-        <a href="newitem.php" class="w3-button w3-hover-white">Add Item</a>
-      </div>
-      <button class="dropdown-btn w3-hover-white">Agent<i class="fa fa-caret-down w3-hover-white"></i></button>
-      <div class="dropdown-container" onclick="w3_close()">
-        <a href="agentlist.php" class="w3-button w3-hover-white">Agent List</a><br>
-        <a href="newagent.php" class="w3-button w3-hover-white">Add Agent</a>
-      </div>
+      <a href="mainpage.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+      <a href="updateinfo.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Profile</a>
+      <a href="mycart.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">My Cart</a>
       <a href="../../index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Logout</a>
+      <script src="../../js/script.js"></script>
     </div>
-  </nav>
+  </nav> -->
 
   <!-- Top menu on small screens -->
   <header class="w3-container w3-top w3-hide-large w3-2019-creme-de-peche w3-xlarge w3-padding">
@@ -112,67 +98,76 @@ $rows = $stmt->fetchAll();
       <img src="../../res/logo.png" alt="Trulli" width="420" height="320" class="responsive">
     </div>
 
+    
+
+    <div class="w3-container w3-center">
+      <h3>Welcome, <strong>
+          <?php
+          echo $user_name;
+          ?>
+        </strong>
+        to our online shop.
+      </h3>
+
+    </div>
+
+
+
     <div class="w3-row-padding w3-padding-16 w3-center">
       <h1 class="w3-xxlarge w3-2019-creme-de-peche w3-center w3-hover-text-black w3-sofia" style="text-shadow: 1px 1px 0 #444;"><b>Menu</b></h1>
 
-      <div class="w3-grid-template">
+      <div class="w3-right w3-container w3-padding w3-row w3-round" style="width:50%">
+        <form class="w3-container" action="mainpage.php" method="get">
+          <div class="w3-twothird"><input class="w3-input w3-border w3-round w3-center" placeholder="Enter pau name" type="text" name="search"></div>
+          <div class="w3-third"><input class="w3-input w3-border w3-red w3-round" type="submit" name="submit" value="search"><br></b></div>
+        </form>
+      </div>
+      <div class="w3-container">
         <?php
+        $cart = "cart";
         foreach ($rows as $pau) {
           $pauid = $pau['pau_id'];
-          $pau_name = ($pau['pau_name']);
+          $pau_name = subString($pau['pau_name']);
           $pau_flav = $pau['pau_flav'];
           $pau_code = $pau['pau_code'];
           $pau_price = $pau['pau_price'];
 
           echo "<div class='w3-center w3-padding-small w3-third'><div class = 'w3-card w3-round-large'>
-                    <div class='w3-padding-small'><a href='pau_details.php?pauid=$pauid'><img class='w3-container w3-image' 
+                    <div class='w3-padding-small'><img class='w3-container w3-image' 
                     src=../../res/pau/$pau_code.jpg onerror=this.onerror=null;this.src='../../res/imgbroken.png'></a></div>
                     <b>$pau_name</b><br>$pau_flav<br>RM $pau_price<br>
+                    <div><button><a href='pau_details.php?pauid=$pauid'><i class='fa fa-cart-arrow-down w3-large' id='button_id' value='Add to Cart' onClick='addCart($pauid);'></i></button></div>
                     </div></div>";
         }
         ?>
       </div>
-
-      <?php
-      $num = 1;
-      if ($pageno == 1) {
-        $num = 1;
-      } else if ($pageno == 2) {
-        $num = ($num) + $results_per_page;
-      } else {
-        $num = $pageno * $results_per_page - 5;
-      }
-      echo "<div class='w3-container w3-row'>";
-      echo "<center>";
-      for ($page = 1; $page <= $number_of_page; $page++) {
-        echo '<a href = "mainpage.php?pageno=' . $page . '" style=
-        "text-decoration: none">&nbsp&nbsp' . $page . ' </a>';
-      }
-      echo " ( " . $pageno . " )";
-      echo "</center>";
-      echo "</div>";
-      ?>
-
-      <footer class="w3-container w3-2019-creme-de-peche w3-center">
-        <p>Powered by FROZEN CARTOON PAU</p>
-      </footer>
     </div>
-    <script>
-      /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-      var dropdown = document.getElementsByClassName("dropdown-btn");
-      var i;
 
-      for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-          this.classList.toggle("active");
-          var dropdownContent = this.nextElementSibling;
-          if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-          } else {
-            dropdownContent.style.display = "block";
-          }
-        });
-      }
-    </script>
+
+    <?php
+    $num = 1;
+    if ($pageno == 1) {
+      $num = 1;
+    } else if ($pageno == 2) {
+      $num = ($num) + $results_per_page;
+    } else {
+      $num = $pageno * $results_per_page - 9;
+    }
+    echo "<div class='w3-container w3-row'>";
+    echo "<center>";
+    for ($page = 1; $page <= $number_of_page; $page++) {
+      echo '<a href = "mainpage.php?pageno=' . $page . '" style=
+        "text-decoration: none">&nbsp&nbsp' . $page . ' </a>';
+    }
+    echo " ( " . $pageno . " )";
+    echo "</center>";
+    echo "</div>";
+    ?>
+
+
+    <footer class="w3-container w3-2019-creme-de-peche w3-center">
+      <p>Powered by FROZEN CARTOON PAU</p>
+    </footer>
+
+  </div>
 </body>
-</html>
